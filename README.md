@@ -88,6 +88,13 @@ npm run start
 ### Fakestoreapi.com and SSR
 
 - **fakestoreapi.com** can **challenge or reject** requests when called from **Vercel** during **SSR** (e.g. on direct load of a product detail page). A practical workaround is to put a **Cloudflare Worker** in front of it and use that as a **reverse proxy** to fakestoreapi.com, then point the app’s API base URL to the worker so SSR requests succeed.
+- You can use **`worker.js`** in this repo to set up your own Cloudflare Worker: deploy it to Cloudflare, then configure the app to use the worker as the API base. Add this to your `.env` (or Vercel env vars) with the worker’s URL:
+
+  ```bash
+  NEXT_PUBLIC_FAKE_STORE_API_URL=https://your-worker.your-subdomain.workers.dev
+  ```
+
+  Replace with the actual URL of your deployed worker so product list and detail requests go through the proxy instead of fakestoreapi.com directly.
 
 ### Cart: confirm before removing
 
