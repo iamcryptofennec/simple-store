@@ -28,6 +28,7 @@ export const ProductListItem = (props: ProductListItemProps) => {
   return (
     <Link
       href={href}
+      prefetch={false}
       className="group relative flex cursor-pointer bg-card border border-border rounded-3xl overflow-hidden hover:border-primary transition-all duration-500"
     >
       <div className="w-28 sm:w-36 aspect-square shrink-0 bg-muted p-4 sm:p-6 flex items-center justify-center relative overflow-hidden">
