@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Loader2 } from "lucide-react";
 import { Header } from "@/components/header";
 import { ProductListItem } from "@/components/product-list-item";
 import { CartContent } from "@/components/cart-content";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useProductsQuery } from "@/hooks/use-products-query";
 import {
   filterProductsBySearch,
@@ -78,11 +78,45 @@ export const ProductList = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
-        <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest">
-          Syncing LING.STORE
-        </p>
+      <div className="min-h-screen bg-background text-foreground font-sans antialiased">
+        <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+        <div className="max-w-[1600px] mx-auto px-4 py-8 flex gap-6 lg:gap-10">
+          <aside className="hidden lg:block w-44 shrink-0">
+            <div className="sticky top-28 space-y-1.5">
+              <Skeleton className="h-10 w-full rounded-xl" />
+              <Skeleton className="h-10 w-full rounded-xl" />
+              <Skeleton className="h-10 w-full rounded-xl" />
+            </div>
+          </aside>
+          <main className="flex-1 min-w-0">
+            <section className="mb-16 scroll-mt-24">
+              <div className="flex items-center gap-4 mb-8">
+                <Skeleton className="h-6 w-32" />
+                <div className="h-px bg-border flex-1" />
+              </div>
+              <div className="space-y-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div
+                    key={i}
+                    className="flex bg-card border border-border rounded-3xl overflow-hidden"
+                  >
+                    <Skeleton className="w-28 sm:w-36 aspect-square shrink-0 rounded-none" />
+                    <div className="flex-1 p-4 flex flex-col justify-center gap-2 min-w-0">
+                      <Skeleton className="h-3 w-16" />
+                      <Skeleton className="h-4 w-full" />
+                      <Skeleton className="h-5 w-14" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </main>
+          <aside className="hidden md:block w-80 shrink-0">
+            <div className="sticky top-28 h-[calc(100vh-140px)] bg-card rounded-[2rem] p-7 border border-border shadow-sm">
+              <CartContent showTitle={true} />
+            </div>
+          </aside>
+        </div>
       </div>
     );
   }
