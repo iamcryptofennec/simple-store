@@ -138,7 +138,7 @@ export const CartContent = (props: CartContentProps) => {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Prompt</DialogTitle>
+            <DialogTitle></DialogTitle>
           </DialogHeader>
           <div className="text-center space-y-6 py-4">
             <p className="font-bold uppercase tracking-tighter">
