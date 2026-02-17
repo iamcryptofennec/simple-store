@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ShoppingBag, ShoppingCart, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { CartSheet } from "@/components/cart-sheet";
+import { useCartStore } from "@/store/cart";
 
 interface HeaderProps {
   searchQuery: string;
@@ -13,6 +14,8 @@ interface HeaderProps {
 
 export const Header = (props: HeaderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const items = useCartStore((s) => s.items);
+  const count = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <>
@@ -51,9 +54,14 @@ export const Header = (props: HeaderProps) => {
               type="button"
               onClick={() => setIsCartOpen(true)}
               className="relative p-2 block md:hidden hover:bg-accent rounded-full transition-colors"
-              aria-label="Open cart"
+              aria-label={count > 0 ? `Open cart (${count} items)` : "Open cart"}
             >
-              <ShoppingCart className="w-6 h-6 text-foreground" />
+              <ShoppingCart className="w-6 h-6 text-foreground shrink-0" />
+              {count > 0 ? (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[1.25rem] h-5 flex items-center justify-center px-1.5 shrink-0 bg-primary text-primary-foreground text-[10px] font-bold rounded-full">
+                  {count}
+                </span>
+              ) : null}
             </button>
           </div>
         </div>
