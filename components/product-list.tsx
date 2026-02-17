@@ -32,7 +32,7 @@ export const ProductList = () => {
     if (element) {
       isScrollingRef.current = true;
       setActiveCategory(catId);
-      const headerOffset = 80;
+      const headerOffset = 100;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
@@ -47,7 +47,7 @@ export const ProductList = () => {
     if (isLoading || categories.length === 0) return;
     const observerOptions = {
       root: null,
-      rootMargin: "-80px 0px -60% 0px",
+      rootMargin: "-100px 0px -100% 0px",
       threshold: [0, 0.01, 0.5],
     };
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -103,12 +103,12 @@ export const ProductList = () => {
       <div className="max-w-[1600px] mx-auto px-4 py-8 flex gap-6 lg:gap-10">
         <aside className="hidden lg:block w-44 shrink-0">
           <div className="sticky top-28 space-y-1.5">
-            <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-2 px-2">
+            {/* <h4 className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-2 px-2">
               Navigation
             </h4>
             <p className="text-[10px] text-muted-foreground mb-4 px-2">
               {filtered.length} {filtered.length === 1 ? "product" : "products"}
-            </p>
+            </p> */}
             {categories.map((cat) => (
               <button
                 key={cat}
