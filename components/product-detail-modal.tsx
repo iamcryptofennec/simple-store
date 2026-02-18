@@ -90,6 +90,7 @@ export const ProductDetailModal = (props: ProductDetailModalProps) => {
                       scope="detail"
                       width={200}
                       height={200}
+                      quality={75}
                       className="object-contain"
                     />
                   </Suspense>
