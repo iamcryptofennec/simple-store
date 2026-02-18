@@ -42,8 +42,8 @@ export const ProductListItem = (props: ProductListItemProps) => {
             alt={props.product.title}
             width={144}
             height={144}
+            quality={75}
             className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
-            unoptimized
           />
         </Suspense>
       </div>
