@@ -126,9 +126,10 @@ export const CartContent = (props: CartContentProps) => {
               ${cartTotal.toFixed(2)}
             </span>
           </div>
-          <Button className="w-full py-5 rounded-2xl text-[12px] tracking-[0.25em] font-bold uppercase shadow-lg">
+          <Button disabled={true} className="w-full py-5 rounded-2xl text-[12px] tracking-[0.25em] font-bold uppercase shadow-lg opacity-50 cursor-not-allowed">
             Process Checkout
           </Button>
+          <p className="text-muted-foreground text-[10px] font-bold uppercase tracking-[0.2em]">Checkout is not available yet</p>
         </div>
       ) : null}
 
