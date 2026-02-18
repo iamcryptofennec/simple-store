@@ -75,7 +75,60 @@ npm run start
 
 ---
 
-## 3. Misc / Notes / Known Issues
+## 3. Testing
+
+The project uses **Vitest** for **unit tests**. Tests run in **Node** (no browser or DOM) and cover pure logic: product filtering/grouping and cart store behavior.
+
+### How to run tests
+
+**Watch mode** (re-runs on file changes):
+
+```bash
+npm run test
+```
+
+**Single run** (e.g. for CI or a one-off check):
+
+```bash
+npm run test:run
+```
+
+### What’s covered
+
+| Area | File | Description |
+|------|------|-------------|
+| **Product utils** | `utils/products.test.ts` | `filterProductsBySearch` and `groupProductsByCategory` from `utils/products.ts`. |
+| **Cart store** | `store/cart.test.ts` | Cart actions and `cartTotal` from `store/cart.ts` (Zustand store). |
+
+**Product utils (`utils/products.ts`)**
+
+- **`filterProductsBySearch(products, searchQuery)`**
+  - Empty or whitespace query returns all products.
+  - Filters by **title** and **category** (case-insensitive).
+  - Returns an empty array when there are no matches (or when the product list is empty).
+- **`groupProductsByCategory(products)`**
+  - Returns an empty object for an empty array.
+  - Groups products by `category` into `Record<category, Product[]>`.
+  - Handles a single category or multiple categories and preserves product fields.
+
+**Cart store (`store/cart.ts`)**
+
+- **`addToCart(product, quantity?)`**  
+  New product adds a line; same product again increases quantity. Optional quantity is supported.
+- **`updateQuantity(id, delta)`**  
+  Increases or decreases quantity by `delta`. Does nothing if the item is missing or if the result would be ≤ 0.
+- **`removeItem(id)`**  
+  Removes the item by id; other items are unchanged.
+- **`cartTotal()`**  
+  Returns the sum of `price × quantity` for all items; 0 for an empty cart.
+- **Persistent state**  
+  The cart uses Zustand `persist` with `localStorage` (key `my-cart`). Tests run in a **jsdom** environment for this file so that persistence is exercised: after `addToCart`, `updateQuantity`, and `removeItem`, the tests assert that the serialized state in `localStorage` matches the store (partialized to `items` only, with the expected shape and version).
+
+Tests reset cart state and `localStorage` between cases (e.g. `beforeEach` clearing items and the storage key) so suites stay independent. The config is in **`vitest.config.ts`** (Node environment, `@` path alias). Coverage output (if enabled) is ignored via `/coverage` in `.gitignore`.
+
+---
+
+## 4. Misc / Notes / Known Issues
 
 ### SEO and detail page
 

@@ -13,7 +13,8 @@ interface CartStore {
   cartTotal: () => number;
 }
 
-const CART_STORAGE_KEY = "my-cart";
+const CART_STORAGE_KEY =
+  process.env.NEXT_PUBLIC_CART_STORAGE_KEY ?? "my-cart-data";
 
 export const useCartStore = create<CartStore>()(
   persist(
